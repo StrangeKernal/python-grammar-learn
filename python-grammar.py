@@ -487,3 +487,50 @@
 #     else:
 #         return fact_iter(n-1, m * n)
 # print('fact(1000):', fact(1000))
+
+# 39. 切片(Slice)操作
+#     Python提供切片操作，用于解决取指定范围索引的操作
+#     l[0:3]表示index从0开始取，直到3为止，但并不包含index=3的元素
+# classmate = ['songhy', 'yinlt', 'zhengmt', 'zhaoy', 'yehy', 'jiac']
+# slc_1 = classmate[0:3]      #不包含classmate[3]
+# slc_2 = classmate[:4]       #不包含classmate[4]
+# slc_3 = classmate[-3:-1]    #不包含classmate[-1]
+# slc_4 = classmate[-4:]      #包含classmate[-1]
+# print('slc_1:{0}\nslc_2:{1}\nslc_3:{2}\nslc_4:{3}'.format(slc_1,slc_2,slc_3,slc_4))
+#     tuple也是一种list，不过是不可变的list，因此tuple也支持切片操作，切片处理后返回的仍然是tuple类型数据
+# classmate = (1, 2, 3, 4, 5)
+# cla_1 = classmate[0:2]
+# cla_2 = classmate[:2]
+# cla_3 = classmate[-3:-1]
+# cla_4 = classmate[-3:]
+# print('cla_1:{0}\ncla_2:{1}\ncla_3:{2}\ncla_4:{3}'.format(cla_1,cla_2,cla_3,cla_4))
+#     字符串str同样也支持切片操作
+# string = 'abcdefg'
+# str_1 = string[0:2]
+# str_2 = string[:3]
+# str_3 = string[-3:-1]
+# str_4 = string[-3:]
+# print('str_1:{0}\nstr_2:{1}\nstr_3:{2}\nstr_4:{3}'.format(str_1,str_2,str_3,str_4))
+
+# 40. 迭代
+#     Python的迭代是通过for in结构实现的
+#     Python中只要是可迭代对象(Iterable)，都可以使用for in进行迭代，dict由于存储顺序并非list的顺序，所以迭代结果可能不一致
+#     Iterable可迭代对象的概念要注意，它表示一种类型，这种类型可以通过isinstance(xxx, Iterable)进行判断
+#     Iterable类型包含在collections模块中
+# from collections import Iterable
+# print(isinstance('abcDFG', Iterable))   #字符串是Iterable
+# print(isinstance([1,2,3], Iterable))    #list是Iterable
+# print(isinstance(233, Iterable))        #整数并非Iterable
+#     Python实现类似Java的下标循环：使用enumerate()方法
+# lis = ['a', 'b', 'c', 'd']
+# for index, value in enumerate(lis):
+#     print(index, value)
+#     Python中多变量循环是很常见的
+# lis = [(1,2), (2,3), (3,4)]
+# for x, y in lis:
+#     print(x, y)
+# lis = [[(1,2), (2,3)],(3,4),(4,5)]
+# for x, y in lis:
+#    print(x, y)
+
+# 41. 列表生成式
