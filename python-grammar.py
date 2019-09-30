@@ -534,3 +534,53 @@
 #    print(x, y)
 
 # 41. 列表生成式
+#     Python提供列表生成式简化循环生成列表    
+#     常见的循环生成list
+# lis_1 = []
+# for index in list(range(1,11)):
+#     lis_1.append(pow(index, 2))
+# print(lis_1)
+#     写列表生成式时，把要生成的元素x * x放到前面，后面跟for循环，就可以把list创建出来
+# lis_2 = [index * index for index in range(1, 11)]
+# print(lis_2)
+#     还可以使用2层循环生成全排列,注意2个变量之间要写符号+
+# lis_3 = [x + y for x in 'abc' for y in '123']
+# print(lis_3)
+#     使用列表生成式能够简洁的列出指定文件目录下所有的文件
+# import os
+# _file_name = [index for index in os.listdir('/Users/soukouki/Desktop')]       #os.listdir()方法需要填入一个字符串表示搜寻的路径
+# print(_file_name)
+#     for循环其实可以同时使用两个甚至多个变量，比如dict的items()可以同时迭代key和value
+# dic = {'a':'1', 'b':'2', 'c':'3'}
+# lis = [key + '=' + value for key,value in dic.items()]
+# print(lis)
+# print(dic.items())
+
+# 42. 生成器
+#     受内存大小限制，list不可能无限增加，Python提供了一种一边循环一边计算的机制，称为generator
+#     generator的生成方法一：将列表生成式的[]更换成()
+# lis = [x * x for x in range(1,11)]
+# gen = (x * x for x in range(1,11))
+# print(lis)
+# print(gen)
+#     generator保存的是算法（元素计算规则），无法直接打印元素，若想要打印元素，需要使用next(gen)
+# print(next(gen))
+# print(next(gen))
+# print(next(gen))
+#     genarator本身也是一种Iterable，因此可以使用for in的方式提取元素
+# for index in gen:
+#     print(index)
+#     generator的生成方法二：函数定义中使用yield关键字
+#     函数是顺序执行，遇到return语句或者最后一行函数语句就返回。
+#     而变成generator的函数，在每次调用next()的时候执行，遇到yield语句返回，再次执行时从上次返回的yield语句处继续执行。
+# def gfnc():
+#     print("step1:")
+#     yield 1
+#     print("step2:")
+#     yield 3
+#     print("step3:")
+#     yield 5
+
+# gen = gfnc()
+# for index in gen:
+#     print(index)
