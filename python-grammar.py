@@ -586,4 +586,83 @@
 #     print(index)
 
 # 43. 迭代器Iterator
-#     生成器不但可以接受for in循环，同时也可以被next()方法不断调用下一个值
+#     迭代器不但可以接受for in循环，同时也可以被next()方法不断调用下一个值，因此生成器属于迭代器
+# from collections import Iterator
+# gen = (x * x for x in range(1,11))      
+# print(isinstance(gen, Iterator))        # generator是Iterator
+# lis = [x * x for x in range(1,11)]     
+# print(isinstance(lis, Iterator))        # list不是Iterator
+# string = 'aBcDeFG'
+# print(isinstance(string, Iterator))     # str不是Iterator
+#     迭代器同样有类型转换的方法iter()
+# print(iter(lis))
+# lis = iter(lis)
+# print(next(lis))
+# print(next(lis))
+# print(next(lis))
+
+# 44. 函数式编程
+#     自我理解：面向函数编程Functional Programming，更接近于数学计算
+
+# 45. 高阶函数
+#     函数本身也可以赋值给变量，同时可以通过这个被赋值的变量调用函数
+# a = abs(-1)
+# b = abs
+# c =b(-2)
+# print(a, b, c)
+#     函数可以接受另一个函数作为参数，这种函数就称为高阶函数
+# def high_fun(x, y, f):
+#     return f(x) + f(y)
+# print(high_fun(-1, 12, abs))
+
+# 46. map/reduce
+#     map()接受2个参数,一个是函数，一个是Iterable，map会将Iterable中所有元素使用传入的函数进行处理
+#     map()返回的是一个Iterator
+# lis = list(range(1, 10))
+# res = map(abs, lis)
+# for index in res:
+#    print(index)
+#    对list直接使用str转换格式方法会出现出乎我们意料的结果，list中[]括号也会被转换为字符
+# lis = [1,2,3,4,5]
+# lis = str(lis)
+# print(type(lis))
+# print(lis[0])
+#    如果使用map则方便很多
+# lis = [1,2,3,4,5]
+# res = list(map(str, lis))
+# print(res)
+#     reduce和map格式一样，需要接受2个参数，第一个参数是函数，第二个参数是Iterable
+#     reduce会将当前计算结果与下一个元素做累积计算，即reduce(f, [x1, x2, x3, x4]) = f(f(f(x1, x2), x3), x4)
+# def fun(x, y):
+#     return x * 10 + y
+# from functools import reduce
+# res = reduce(fun, [1,2,3,4,5])
+# print(res)
+
+# from functools import reduce
+# def char2int(string):
+#     dic = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}
+#     return dic[string]
+# def sum(x, y):
+#     return x*10 + y
+# res = reduce(sum, map(char2int, '12306'))
+# print(res)
+
+# 47. lambda函数
+#     lambda x:x+1可以认为lambda函数作为一个表达式，包含了一个匿名函数：
+#     def g(x):
+#       return x+1
+#     即参数与函数体（包含返回）
+# g = lambda x: x * x
+# print(g(2))
+
+# 48. filter
+#     filter()同样接受一个函数，一个Iterable参数
+#     filter会对Iterable逐个进行函数操作，同时判断返回结果是True或False，仅保留返回为True的元素
+# def is_odd(n):
+#     return n%2 == 1
+# res = filter(is_odd, [1,2,3,4,5,6,7])
+# print(list(res))
+# def not_empty(s):
+#     return s and s.strip()
+# print(list(filter(not_empty, ['A', '', 'B', None, 'C', '  '])))
