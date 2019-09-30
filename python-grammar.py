@@ -584,3 +584,6 @@
 # gen = gfnc()
 # for index in gen:
 #     print(index)
+
+# 43. 迭代器Iterator
+#     生成器不但可以接受for in循环，同时也可以被next()方法不断调用下一个值
