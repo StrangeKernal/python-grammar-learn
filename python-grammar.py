@@ -666,3 +666,110 @@
 # def not_empty(s):
 #     return s and s.strip()
 # print(list(filter(not_empty, ['A', '', 'B', None, 'C', '  '])))
+
+# 49. sorted
+#     sorted是python内置的排序算法
+# lis = [1, -4, 0.3, 1011, 9, -0.5, 0, 12]
+# lis = sorted(lis)
+# print(lis)
+#     sorted也是一个高阶函数，它可以接受一个key函数，将list经过key函数处理后的结果进行排序
+#     例如key=abs，可以使list的元素按绝对值大小进行排序
+# lis = sorted(lis, key=abs)
+# print(lis)
+#     sorted对字符串进行排序时，依据的是ascii码的大小
+#     ascii中大写字母A～Z位于小写字母a～z之前，如要忽略大小写仅按字典序进行排序可以使用str.lower()作为key函数
+# lis = ['apple', 'Baker', 'downtown', 'Client', 'glory', 'flame']
+# res = sorted(lis)
+# print(res)
+# res = sorted(lis, key=str.lower)
+# print(res)
+#     sorted同时支持反向排序，需要添加参数reverse=True，由此可以实现由大到小排序
+# lis = ['apple', 'Baker', 'downtown', 'Client', 'glory', 'flame']
+# res = sorted(lis, key=str.lower, reverse=True)
+# print(res)
+
+# 50. 装饰器
+#     在代码运行期间动态增加功能的方式，称之为“装饰器”（Decorator）
+# def log(func):
+#     def wrapper(*args, **kw):
+#         print('call %s():' % func.__name__)
+#         return func(*args, **kw)
+#     return wrapper
+# @log
+# def now():
+#     print('2019.11.08')
+# now()
+#     调用now()函数，不仅会运行now()函数本身，还会在运行now()函数前打印一行日志
+#     把@log放到now()函数的定义处，相当于执行了语句：now=log(now)
+
+# 51. 偏函数
+#     偏函数（Partial function）是python的functools模块提供的便捷功能，通过functools.partial实现
+#     functools.partial的作用就是，把一个函数的某些参数给固定住（也就是设置默认值），返回一个新的函数，调用这个新函数会更简单。
+#     当函数的参数个数太多，需要简化时，使用functools.partial可以创建一个新的函数，这个新函数可以固定住原函数的部分参数，从而在调用时更简单
+# import functools
+# int2 = functools.partial(int, base=2)   #base参数为int()方法自带参数，表示base指定进制进行转换，缺省值为10 
+# print(int2('10101101'))
+
+# 52. 模块
+#     模块是一组Python代码的集合，可以使用其他模块，也可以被其他模块使用。
+#     创建自己的模块时，要注意：
+#     1）模块名要遵循Python变量命名规范，不要使用中文、特殊字符；
+#     2）模块名不要和系统模块名冲突，最好先查看系统是否已存在该模块；
+#     检查模块名冲突的方法是在Python交互环境执行import abc，若成功则说明系统存在此模块。
+
+#     任何模块代码的第一个字符串都被视为模块的文档注释；
+# 'A test module'
+# __author__ = 'songhy'
+
+# import sys
+# def test():
+#     args = sys.argv
+#     if len(args)==1:
+#         print('Hello, world!')
+#     elif len(args)==2:
+#         print('Hello, %s!' % args[1])
+#     else:
+#         print('Too many arguments!')
+
+# if __name__=='__main__':
+#     test()
+
+#     引入第三方模块
+#     python引入第三方模块使用包管理工具pip
+# pip install Pillow
+#     安装常用模块的时候，推荐直接使用Anaconda
+
+# 53. 面向对象OOAD
+#     python的类定义通过class关键字,类名通常是大写开头的单词，紧接着是(object)，表示该类是从哪个类继承下来的.
+#     通常，如果没有合适的继承类，就使用object类，这是所有类最终都会继承的类。
+#     最后，注意范围定义要用冒号‘:’
+#     如果要让内部属性不被外部访问，可以把属性的名称前加上两个下划线__
+#     在Python中，实例的变量名如果以__开头，就变成了一个私有变量（private），只有内部可以访问，外部不能访问.
+# class Student(object):
+#     test_name = shy   #类属性,这个属性虽然归类所有，但类的所有实例都可以访问到。
+#     def __init__(self, name, score):
+#         self.__name  = name
+#         self.__score = score
+#     def print_score(self):
+#         print('%s: %s' % (self.__name, self.__score))
+# songhy = Student('songhy', '98')
+# print(type(songhy))
+
+# 54. __slots__
+#     正常情况下，当我们定义了一个class，创建了一个class的实例后，我们可以给该实例绑定任何属性和方法，这就是动态语言的灵活性。
+#     但是，给一个实例绑定的方法，对另一个实例是不起作用的
+#     为了给所有实例都绑定方法，可以给class绑定方法,给class绑定方法后，所有实例均可调用.
+# class Student(object):
+#     pass
+# shy = Student()
+# shy.name = 'songhy'
+# shy.score = '97'
+# print(shy.name, shy.score)
+#     但是，如果我们想要限制实例的属性怎么办？比如，只允许对Student实例添加name和age属性。
+#     为了达到限制的目的，Python允许在定义class的时候，定义一个特殊的__slots__变量，来限制该class实例能添加的属性：
+# class Student(object):
+#     __slots__ = ('name', 'age') # 用tuple定义允许绑定的属性名称
+#     使用__slots__要注意，__slots__定义的属性仅对当前类实例起作用，对继承的子类是不起作用的
+#     除非在子类中也定义__slots__，这样，子类实例允许定义的属性就是自身的__slots__加上父类的__slots__。
+
+# 55. 错误处理
