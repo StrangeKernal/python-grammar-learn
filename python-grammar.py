@@ -773,3 +773,58 @@
 #     除非在子类中也定义__slots__，这样，子类实例允许定义的属性就是自身的__slots__加上父类的__slots__。
 
 # 55. 错误处理
+#     try...except...finally...处理机制
+# try:
+#     print('try……')
+#     r = 10 / int('a')
+#     print('result:', r)
+# except ValueError as e:
+#     print('except:', e)
+# except ZeroDivisionError as e:
+#     print('except:', e)
+# finally:
+#     print('finally……')
+# print('END')
+
+# 56. 多进程
+#     Python的os模块封装了常见的系统调用，其中就包括fork，可以在Python程序中轻松创建子进程
+# import os
+# print('进程%s启动:' % os.getpid())
+# pid = os.fork()
+# if pid == 0:
+#     print('本进程为:%s,本进程的父进程为:%s' % (os.getpid(), os.getppid()))
+# else:
+#     print('本进程为:%s,本进程生成了一个子进程:%s' % (os.getpid(), pid))
+
+# 57. 多线程（待更）
+
+# 58. 正则表达式
+#     正则表达式是一种用来匹配字符串的强有力的武器。它的设计思想是用一种描述性的语言来给字符串定义一个规则，凡是符合规则的字符串，我们就认为它“匹配”了
+#     否则，该字符串就是不合法的。
+#     匹配规则：在正则表达式中，如果直接给出字符，就是精确匹配。
+#     1）\d 可以匹配一个数字
+#     2）\w 可以匹配一个字母或数字
+#     3）.可以匹配任意字符
+#     4）*表示任意个字符（包括0个），用+表示至少一个字符，用?表示0个或1个字符，用{n}表示n个字符，用{n,m}表示n-m个字符
+#     5）\s可以匹配一个空格（也包括Tab等空白符）
+#     6）更精确的匹配采用[]表示范围，例如：
+#       [a-zA-Z\_][0-9a-zA-Z\_]*可以匹配由字母或下划线开头，后接任意个由一个数字、字母或者下划线组成的字符串，也就是Python合法的变量
+#       [a-zA-Z\_][0-9a-zA-Z\_]{0, 19}更精确地限制了变量的长度是1-20个字符（前面1个字符+后面最多19个字符）。
+#     7）A|B可以匹配A或B，所以(P|p)ython可以匹配'Python'或者'python'
+#     8）^表示行的开头，^\d表示必须以数字开头。
+#     9）$表示行的结束，\d$表示必须以数字结束。
+
+# 60. datetime
+# from datetime import datetime   #datetime模块中还有一个datetime类
+# now = datetime.now()
+# print(now)
+# dt = datetime(2015, 4, 19, 12, 20)
+# print('创建的datetime:', dt)
+# str转换datetime
+# from datetime import datetime
+# cday = datetime.strptime('2015-4-1 18:09:20', '%Y-%m-%d %H:%M:%S')
+# print(cday)
+# datetime转str
+# from datetime import datetime
+# now = datetime.now()
+# print(now.strftime('%a, %b, %d %H:%M'))
