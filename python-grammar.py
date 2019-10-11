@@ -828,3 +828,84 @@
 # from datetime import datetime
 # now = datetime.now()
 # print(now.strftime('%a, %b, %d %H:%M'))
+
+# 61. 协程
+#     Python中的协程大概经历了如下三个阶段：
+#     1. 最初的生成器变形yield/send
+#     2. 引入@asyncio.coroutine和yield from
+#     3. 在最近的Python3.5版本中引入async/await关键字
+
+#     首先看最初的yield/send,主要注意yield的执行顺序
+#     其实receive=yield value包含了3个步骤：
+#     1、向函数外抛出（返回）value
+#     2、暂停(pause)，等待next()或send()恢复
+#     3、赋值receive=MockGetValue() 。 这个MockGetValue()是假想函数，用来接收send()发送进来的值
+
+# def consumer():
+#     r = ''
+#     while True:
+#         n = yield r #执行顺序：先返回yield r，中断等带next或send激活，继续执行；所以在循环结束后r变为'200 OK'返回，n的值只能从send取
+#         if not n:
+#             return
+#         print('[CONSUMER] Cosuming %s' % n)
+#         r = '200 OK'
+# def produce(c):
+#     c.send(None)
+#     n = 0
+#     while n < 5:
+#         n += 1
+#         print('[PRODUCER] Producing %s...' % n)
+#         r = c.send(n)
+#         print('[PRODUCER] Consumer return: %s' % r)
+#     c.close()
+# c = consumer()
+# produce(c)
+
+#     yield from在asyncio模块中得以发扬光大。之前都是我们手工切换协程，现在当声明函数为协程后，我们通过事件循环来调度协程
+# import asyncio, random
+
+# @asyncio.coroutine
+# def smart_fib(max):
+#     index,a,b=0,0,1
+#    while index < max:
+#         # sleep_secs = random.uniform(0, 0.2)
+#        yield from asyncio.sleep(sleep_secs) #yield后面常接的耗时长的操作
+#        print('Smart one think {} secs to get {}'.format(sleep_secs, b))
+#        a,b=b,a+b
+#        index+=1
+
+# @asyncio.coroutine
+# def stupid_fib(max):
+#     index,a,b=0,0,1
+#     while index < max:
+#         # sleep_secs = random.uniform(0, 0.4)
+#         yield from asyncio.sleep(sleep_secs)
+#         print('Stupid one think {} secs to get {}'.format(sleep_secs, b))
+#         a,b=b,a+b
+#         index+=1
+
+# if __name__ == "__main__":
+#     loop = asyncio.get_event_loop()
+#     task = [smart_fib(10), stupid_fib(10)]
+#     loop.run_until_complete(asyncio.wait(task))
+#     print('loop end')
+#     loop.close()
+
+#     async与await
+# import time,asyncio,random
+# async def mygen(lis):
+#     while len(lis) > 0:
+#         c = random.randint(0, len(lis)-1)
+#         print(lis.pop(c))
+#         await asyncio.sleep(1) 
+# strlist = ["ss","dd","gg"]
+# intlist=[1,2,5,6]
+# c1=mygen(strlist)
+# c2=mygen(intlist)
+
+# if __name__ == "__main__":
+#     loop = asyncio.get_event_loop()
+#     task = [c1, c2]
+#     loop.run_until_complete(asyncio.wait(task))
+#     print('loop end')
+#     loop.close()
